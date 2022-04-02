@@ -13,3 +13,12 @@ body{
 .pointer{
     cursor: pointer;
 }
+
+.moon:hover{
+    transform: scale(1.01);
+}
+.pop:hover{
+    transform: scale(1.02);
+    transform: skew(-0.02turn, 5deg);
+    box-shadow: 3px 3px 3px silver
+}

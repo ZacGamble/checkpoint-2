@@ -5,7 +5,7 @@ let clickUpgrades = {
         multiplier: 3
     },
     cheeseStorage: {
-        price: 30,
+        price: 20,
         quantity: 0,
         multiplier: 6
     }
@@ -13,14 +13,14 @@ let clickUpgrades = {
 
 let automaticUpgrades = {
     spaceCow: {
-        price: 20,
+        price: 25,
         quantity: 0,
-        multiplier: 3
+        multiplier: 4
     },
     lunarDairyRefinery: {
         price: 100,
         quantity: 0,
-        multiplier: 10
+        multiplier: 15
     }
 }
 
@@ -74,14 +74,14 @@ function update(){
     </div>
     </div>
     <!-- Moon object clickable -->
-    <div class="col-md-4 border">
+    <div class="col-md-4 moon">
     <img onclick="mineClick()" oncontextmenu="return false;" class="img-fluid pointer" src="assets/mike-petrucci-uIf6H1or1nE-unsplash.jpg" alt="">
     </div>
         <!-- Player's owned upgrades -->
         <div class="col-md-4">
         <div class="card p-2 text-dark">
                 <h3>Miner's Inventory</h3>
-                <span class="fs-1 mdi mdi-cheese" id="cheese">Cheese ${cheese}</span>
+                <span class="fs-1 mdi mdi-cheese bg-warning" id="cheese">Cheese <b>${cheese}</b></span>
                 <span class="fs-5 mdi mdi-knife">Cheese Knives ${clickUpgrades.cheeseKnife.quantity} (+${clickUpgrades.cheeseKnife.multiplier} per click)</span>
                 <span class="fs-5 mdi mdi-cart">Cheese Storages ${clickUpgrades.cheeseStorage.quantity} (+ ${clickUpgrades.cheeseStorage.multiplier} per click)</span>
                 <span class="fs-5 mdi mdi-cow">Space Cows ${automaticUpgrades.spaceCow.quantity} (+${automaticUpgrades.spaceCow.multiplier} per second)</span>
@@ -94,11 +94,11 @@ function update(){
                 <div class="col-md-6 p-3 text-center">
                 <h3 class="">Purchase On-click Upgrades Below</h3>
                 <div class="d-flex justify-content-evenly">
-                <div onclick="buyCheeseKnife('cheeseKnife')" class="flex-column d-flex border pointer">
+                <div onclick="buyCheeseKnife('cheeseKnife')" class="flex-column d-flex border pointer pop">
                 Cheese Knife ($${clickUpgrades.cheeseKnife.price})
                 <img class="upgradePics" src="/assets/nathalia-rosa-BtD81mBbD0E-unsplash.jpg" alt="">
                 </div>
-                <div onclick="buyCheeseStorage()" class="d-flex flex-column border pointer">
+                <div onclick="buyCheeseStorage()" class="d-flex flex-column border pointer pop">
                 Cheese Storage ($${clickUpgrades.cheeseStorage.price})
                 <img class="upgradePics" src="/assets/katrin-leinfellner-v9deD75EaRw-unsplash.jpg" alt="">
                     </div>
@@ -107,11 +107,11 @@ function update(){
                     <div class="col-md-6 p-3 text-center">
                     <h3>Purchase Automated Upgrades Below</h3>
                     <div class="d-flex justify-content-evenly">
-                    <div onclick="buySpaceCow()" class="d-flex flex-column pointer border">
+                    <div onclick="buySpaceCow()" class="d-flex flex-column pointer border pop">
                     Space Cow ($${automaticUpgrades.spaceCow.price})
                     <img class="upgradePics" src="/assets/spaceCow.jpg" alt="">
                     </div>
-                    <div onclick="buyDairyRefinery()" class="d-flex flex-column pointer border">
+                    <div onclick="buyDairyRefinery()" class="d-flex flex-column pointer border pop">
                     Lunar Dairy Refinery ($${automaticUpgrades.lunarDairyRefinery.price})
                     <img class="upgradePics" src="/assets/tasos-mansour-NRfNe4ys_bM-unsplash.jpg" alt="">
                     </div>
@@ -130,9 +130,30 @@ function update(){
                         totalCheeseMultiplier += clickUpgrades.cheeseKnife.multiplier
                         update()
                     }else{
-                        alert('Not enough cheese!')
+                        let timerInterval
+                    Swal.fire({
+                    title: 'You cannot afford this!',
+                    html: 'I will close in <b></b> milliseconds.',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
                     }
+                    }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                    }
+                    })
+                                        }
                 }
+
                 function buyCheeseStorage() {
                     if (cheese >= clickUpgrades.cheeseStorage.price) {
                         cheese -= clickUpgrades.cheeseStorage.price 
@@ -141,9 +162,31 @@ function update(){
                         totalCheeseMultiplier += clickUpgrades.cheeseStorage.multiplier
                         update()
                     }else{
-                        alert('Not enough cheese!')
+                        let timerInterval
+                    Swal.fire({
+                    title: 'You cannot afford this!',
+                    html: 'I will close in <b></b> milliseconds.',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                    }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                    })
                     }
                 }
+
                 function buySpaceCow() {
                     if (cheese >= automaticUpgrades.spaceCow.price) {
                         cheese -= automaticUpgrades.spaceCow.price 
@@ -152,9 +195,31 @@ function update(){
                         update()
                         // calculateAutoCheese()
                     }else{
-                        alert('Not enough cheese!')
+                        let timerInterval
+                    Swal.fire({
+                    title: 'You cannot afford this!',
+                    html: 'I will close in <b></b> milliseconds.',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                    }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                    })
                     }
                 }
+
                 function buyDairyRefinery() {
                     if (cheese >= automaticUpgrades.lunarDairyRefinery.price) {
                         cheese -= automaticUpgrades.lunarDairyRefinery.price
@@ -164,7 +229,28 @@ function update(){
                         // calculateAutoCheese()
                      }else
                      {
-                        alert('Not enough cheese!')
+                        let timerInterval
+                        Swal.fire({
+                          title: 'You cannot afford this!',
+                          html: 'I will close in <b></b> milliseconds.',
+                          timer: 1500,
+                          timerProgressBar: true,
+                          didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                              b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                          },
+                          willClose: () => {
+                            clearInterval(timerInterval)
+                          }
+                        }).then((result) => {
+                          /* Read more about handling dismissals below */
+                          if (result.dismiss === Swal.DismissReason.timer) {
+                            console.log('I was closed by the timer')
+                          }
+                        })
     }
 }
 //#endregion
@@ -172,4 +258,4 @@ function update(){
 
 // must call update() to render page
 update();
-setInterval(collectAutoUpgrades, 1000)
+setInterval(collectAutoUpgrades, 2000)
