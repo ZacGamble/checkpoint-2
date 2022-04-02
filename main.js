@@ -2,12 +2,12 @@ let clickUpgrades = {
     cheeseKnife: {
         price: 5,
         quantity: 0,
-        multiplier: 2
+        multiplier: 3
     },
     cheeseStorage: {
         price: 30,
         quantity: 0,
-        multiplier: 4
+        multiplier: 6
     }
 };
 
@@ -27,7 +27,6 @@ let automaticUpgrades = {
 
 let cheese = 0
 let totalCheeseMultiplier = 0
-let autoCheese = 0
 
 function mineClick(params) {
     cheese++
@@ -36,7 +35,6 @@ function mineClick(params) {
         const upgrade = clickUpgrades[key]
         if (upgrade.quantity > 0) {
             cheese += upgrade.quantity * upgrade.multiplier
-            autoCheese = upgrade.quantity * upgrade.multiplier
         }
     }
     update()
@@ -46,10 +44,22 @@ function collectAutoUpgrades() {
     for (const key in automaticUpgrades) {
         const autoUpgrade = automaticUpgrades[key];
         if (autoUpgrade.quantity > 0) {
-           cheese += autoUpgrade.multiplier * autoUpgrade.quantity;   
+            cheese += autoUpgrade.multiplier * autoUpgrade.quantity;   
         }
-    } update()
+    } 
+     update()
 }
+// function calculateAutoCheese(){
+    //     for (const key in automaticUpgrades) {
+        //         if (Object.hasOwnProperty.call(automaticUpgrades, key)) {
+            //             const autoUpgrade = automaticUpgrades[key];
+//             autoCheese = autoUpgrade.quantity * autoUpgrade.multiplier
+//             // autoCheese += autoUpgrade.quantity * autoUpgrade.multiplier
+//         }
+//     }
+// }
+
+
 
 function update(){
     let template = ''
@@ -59,7 +69,8 @@ function update(){
     <div class="col-md-4 d-flex flex-column justify-content-center">
     <div class="text-light">
     <h3>Bonus Per Click: ${totalCheeseMultiplier}</h3>
-    <span class=""> </span>
+    <h3>SpaceCow cheese per second: ${automaticUpgrades.spaceCow.multiplier * automaticUpgrades.spaceCow.quantity}</h3>
+    <h3>Refinery cheese per second: ${automaticUpgrades.lunarDairyRefinery.multiplier * automaticUpgrades.lunarDairyRefinery.quantity}
     </div>
     </div>
     <!-- Moon object clickable -->
@@ -139,6 +150,7 @@ function update(){
                         automaticUpgrades.spaceCow.quantity += 1
                         automaticUpgrades.spaceCow.price *= 2
                         update()
+                        // calculateAutoCheese()
                     }else{
                         alert('Not enough cheese!')
                     }
@@ -149,6 +161,7 @@ function update(){
                         automaticUpgrades.lunarDairyRefinery.quantity += 1
                         automaticUpgrades.lunarDairyRefinery.price *= 2
                         update()
+                        // calculateAutoCheese()
                      }else
                      {
                         alert('Not enough cheese!')
@@ -156,7 +169,7 @@ function update(){
 }
 //#endregion
 
-setInterval(collectAutoUpgrades, 1000)
 
 // must call update() to render page
 update();
+setInterval(collectAutoUpgrades, 1000)
