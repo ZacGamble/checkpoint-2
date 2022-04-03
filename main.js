@@ -26,6 +26,7 @@ let automaticUpgrades = {
 
 
 let cheese = 0
+let autoCheese = 0
 let totalCheeseMultiplier = 0
 
 function mineClick(params) {
@@ -50,15 +51,15 @@ function collectAutoUpgrades() {
      update()
 }
 // function calculateAutoCheese(){
-    //     for (const key in automaticUpgrades) {
-        //         if (Object.hasOwnProperty.call(automaticUpgrades, key)) {
-            //             const autoUpgrade = automaticUpgrades[key];
-//             autoCheese = autoUpgrade.quantity * autoUpgrade.multiplier
-//             // autoCheese += autoUpgrade.quantity * autoUpgrade.multiplier
-//         }
-//     }
+//         for (const key in automaticUpgrades) { 
+//              const autoUpgrade = automaticUpgrades[key];
+//              if (autoUpgrade.quantity > 0) {
+//                  autoCheese = autoUpgrade.quantity * autoUpgrade.multiplier
+//                  autoCheese.reduce
+//                 console.log(autoCheese)
+//             }
+//     } 
 // }
-
 
 
 function update(){
@@ -72,6 +73,7 @@ function update(){
     statsTemplate += /*html*/
     `
     <h3>Bonus Per Click: ${totalCheeseMultiplier}</h3>
+    <h3>Cheese/second: ${autoCheese}
     `
     document.getElementById('stats-container').innerHTML = statsTemplate
     
@@ -179,6 +181,7 @@ function update(){
                         cheese -= automaticUpgrades.spaceCow.price 
                         automaticUpgrades.spaceCow.quantity += 1
                         automaticUpgrades.spaceCow.price *= 2
+                        autoCheese += automaticUpgrades.spaceCow.multiplier
                         update()
                         // calculateAutoCheese()
                     }else{
@@ -212,6 +215,7 @@ function update(){
                         cheese -= automaticUpgrades.lunarDairyRefinery.price
                         automaticUpgrades.lunarDairyRefinery.quantity += 1
                         automaticUpgrades.lunarDairyRefinery.price *= 2
+                        autoCheese += automaticUpgrades.lunarDairyRefinery.multiplier
                         update()
                         // calculateAutoCheese()
                      }else
