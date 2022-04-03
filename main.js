@@ -62,65 +62,52 @@ function collectAutoUpgrades() {
 
 
 function update(){
-    let template = ''
-    template += /*html*/
+    let statsTemplate = ''
+    let inventoryTemplate = ''
+    let cheeseKnifeTemplate = ''
+    let cheeseStorageTemplate = ''
+    let spaceCowTemplate = ''
+    let lunarDairyRefineryTemplate = ''
+
+    statsTemplate += /*html*/
     `
-    <div class="row">
-    <div class="col-md-4 d-flex flex-column justify-content-center">
-    <div class="text-light">
     <h3>Bonus Per Click: ${totalCheeseMultiplier}</h3>
-    <h3>SpaceCow cheese per second: ${automaticUpgrades.spaceCow.multiplier * automaticUpgrades.spaceCow.quantity}</h3>
-    <h3>Refinery cheese per second: ${automaticUpgrades.lunarDairyRefinery.multiplier * automaticUpgrades.lunarDairyRefinery.quantity}
+    `
+    document.getElementById('stats-container').innerHTML = statsTemplate
+    
+    inventoryTemplate+=/*html*/ `
+    <div class="card p-2 text-dark">
+    <h3>Miner's Inventory</h3>
+    <span class="fs-1 mdi mdi-cheese bg-warning" id="cheese">Cheese <b>${cheese}</b></span>
+    <span class="fs-5 mdi mdi-knife">Cheese Knives ${clickUpgrades.cheeseKnife.quantity} (+${clickUpgrades.cheeseKnife.multiplier * clickUpgrades.cheeseKnife.quantity} /click)</span>
+    <span class="fs-5 mdi mdi-cart">Cheese Storages ${clickUpgrades.cheeseStorage.quantity} (+ ${clickUpgrades.cheeseStorage.multiplier * clickUpgrades.cheeseStorage.quantity} /click)</span>
+    <span class="fs-5 mdi mdi-cow">Space Cows ${automaticUpgrades.spaceCow.quantity} (+${automaticUpgrades.spaceCow.multiplier * automaticUpgrades.spaceCow.quantity} /second)</span>
+    <span class="fs-5 mdi mdi-warehouse">Lunar Dairy Refineries ${automaticUpgrades.lunarDairyRefinery.quantity} (+${automaticUpgrades.lunarDairyRefinery.multiplier * automaticUpgrades.lunarDairyRefinery.quantity} /second)</span>
     </div>
-    </div>
-    <!-- Moon object clickable -->
-    <div class="col-md-4 moon">
-    <img onclick="mineClick()" oncontextmenu="return false;" class="img-fluid pointer" src="assets/mike-petrucci-uIf6H1or1nE-unsplash.jpg" alt="">
-    </div>
-        <!-- Player's owned upgrades -->
-        <div class="col-md-4">
-        <div class="card p-2 text-dark">
-                <h3>Miner's Inventory</h3>
-                <span class="fs-1 mdi mdi-cheese bg-warning" id="cheese">Cheese <b>${cheese}</b></span>
-                <span class="fs-5 mdi mdi-knife">Cheese Knives ${clickUpgrades.cheeseKnife.quantity} (+${clickUpgrades.cheeseKnife.multiplier} per click)</span>
-                <span class="fs-5 mdi mdi-cart">Cheese Storages ${clickUpgrades.cheeseStorage.quantity} (+ ${clickUpgrades.cheeseStorage.multiplier} per click)</span>
-                <span class="fs-5 mdi mdi-cow">Space Cows ${automaticUpgrades.spaceCow.quantity} (+${automaticUpgrades.spaceCow.multiplier} per second)</span>
-                <span class="fs-5 mdi mdi-warehouse">Lunar Dairy Refineries ${automaticUpgrades.lunarDairyRefinery.quantity} (+${automaticUpgrades.lunarDairyRefinery.multiplier} per second)</span>
-                </div>
-                </div>
-                </div>
-                <!-- Store container here somewhere -->
-                <div class="row d-flex">
-                <div class="col-md-6 p-3 text-center">
-                <h3 class="">Purchase On-click Upgrades Below</h3>
-                <div class="d-flex justify-content-evenly">
-                <div onclick="buyCheeseKnife('cheeseKnife')" class="flex-column d-flex border pointer pop">
-                Cheese Knife ($${clickUpgrades.cheeseKnife.price})
-                <img class="upgradePics" src="/assets/nathalia-rosa-BtD81mBbD0E-unsplash.jpg" alt="">
-                </div>
-                <div onclick="buyCheeseStorage()" class="d-flex flex-column border pointer pop">
-                Cheese Storage ($${clickUpgrades.cheeseStorage.price})
-                <img class="upgradePics" src="/assets/katrin-leinfellner-v9deD75EaRw-unsplash.jpg" alt="">
-                    </div>
-                    </div>
-                    </div>
-                    <div class="col-md-6 p-3 text-center">
-                    <h3>Purchase Automated Upgrades Below</h3>
-                    <div class="d-flex justify-content-evenly">
-                    <div onclick="buySpaceCow()" class="d-flex flex-column pointer border pop">
-                    Space Cow ($${automaticUpgrades.spaceCow.price})
-                    <img class="upgradePics" src="/assets/spaceCow.jpg" alt="">
-                    </div>
-                    <div onclick="buyDairyRefinery()" class="d-flex flex-column pointer border pop">
-                    Lunar Dairy Refinery ($${automaticUpgrades.lunarDairyRefinery.price})
-                    <img class="upgradePics" src="/assets/tasos-mansour-NRfNe4ys_bM-unsplash.jpg" alt="">
-                    </div>
-                    </div>
-                    </div>
-                    </div> 
-                    `
-                    document.getElementById('total').innerHTML = template
-                }
+    `
+    document.getElementById('inventory-container').innerHTML = inventoryTemplate
+    
+    cheeseKnifeTemplate +=`
+    Cheese Knife ($${clickUpgrades.cheeseKnife.price})
+    `
+    document.getElementById('cheeseKnife-container').innerHTML = cheeseKnifeTemplate
+
+    cheeseStorageTemplate += `
+    Cheese Storage ($${clickUpgrades.cheeseStorage.price})
+    `
+    document.getElementById('cheeseStorage-container').innerHTML = cheeseStorageTemplate
+
+    spaceCowTemplate += `
+                Space Cow ($${automaticUpgrades.spaceCow.price})
+                `
+    document.getElementById('spaceCow-container').innerHTML = spaceCowTemplate
+
+    lunarDairyRefineryTemplate += `
+                Lunar Dairy Refinery ($${automaticUpgrades.lunarDairyRefinery.price})
+                `
+    document.getElementById('dairyRefinery-container').innerHTML = lunarDairyRefineryTemplate 
+    }
+
  //#region Click Functions
                 function buyCheeseKnife() {
                     if (cheese >= clickUpgrades.cheeseKnife.price) {
@@ -131,11 +118,11 @@ function update(){
                         update()
                     }else{
                         let timerInterval
-                    Swal.fire({
-                    title: 'You cannot afford this!',
-                    html: 'I will close in <b></b> milliseconds.',
-                    timer: 1500,
-                    timerProgressBar: true,
+                        Swal.fire({
+                            title: 'You cannot afford this!',
+                            html: 'I will close in <b></b> milliseconds.',
+                            timer: 1500,
+                            timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading()
                         const b = Swal.getHtmlContainer().querySelector('b')
@@ -258,4 +245,4 @@ function update(){
 
 // must call update() to render page
 update();
-setInterval(collectAutoUpgrades, 2000)
+setInterval(collectAutoUpgrades, 1000)
