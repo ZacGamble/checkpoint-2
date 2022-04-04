@@ -50,17 +50,21 @@ function collectAutoUpgrades() {
     } 
      update()
 }
-// function calculateAutoCheese(){
-//         for (const key in automaticUpgrades) { 
-//              const autoUpgrade = automaticUpgrades[key];
-//              if (autoUpgrade.quantity > 0) {
-//                  autoCheese = autoUpgrade.quantity * autoUpgrade.multiplier
-//                  autoCheese.reduce
-//                 console.log(autoCheese)
-//             }
-//     } 
-// }
 
+function spawnUpgrades(){
+    if(cheese >= 5){
+        cheeseKnife.style.visibility = "visible";
+    }
+    if(cheese >= 20){
+        cheeseStorage.style.visibility = "visible";
+    }
+    if(cheese >= 25){
+        spaceCow.style.visibility = 'visible';
+    }
+    if(cheese >= 100){
+        lunarDairyRefinery.style.visibility = "visible"
+    }
+}
 
 function update(){
     let statsTemplate = ''
@@ -108,6 +112,7 @@ function update(){
                 Lunar Dairy Refinery ($${automaticUpgrades.lunarDairyRefinery.price})
                 `
     document.getElementById('dairyRefinery-container').innerHTML = lunarDairyRefineryTemplate 
+    spawnUpgrades()
     }
 
  //#region Click Functions
@@ -247,6 +252,6 @@ function update(){
 //#endregion
 
 
-// must call update() to render page
+// must call update() after every stat change
 update();
 setInterval(collectAutoUpgrades, 1000)

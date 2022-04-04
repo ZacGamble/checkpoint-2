@@ -14,41 +14,36 @@
   </head>
   <body class="text-light">
       <header>
+        <h1 class="text-light p-2 text-center">Moon Miner</h1>
       </header>
       <main>
         <div id="total" class="container-fluid">
           <div class="row">
             <div class="col-md-4 d-flex flex-column justify-content-center">
-              <h1 class="text-light">Moon Miner</h1>
               <!-- stats template below in first column of the row -->
-                <div id="stats-container" class="text-light">
-                  
+                <div id="stats-container" class="text-light p-3">
                 </div>
             </div>
-
-                  <!-- Moon object clickable in second column of the row -->
-                <div class="col-md-4 moon">
-                  <img onclick="mineClick()" oncontextmenu="return false;" class="img-fluid pointer" 
-                  src="assets/mike-petrucci-uIf6H1or1nE-unsplash.jpg" alt="The Moon">
-                </div>
-
-                <!-- Player's owned upgrades, final column of row one -->
-                <div id="inventory-container" class="col-md-4">
-
-              </div>
+            <!-- Moon object clickable in second column of the row -->
+            <div class="col-md-4 moon">
+              <img id="moon" onclick="mineClick()" oncontextmenu="return false;" class="img-fluid pointer" 
+              src="assets/mike-petrucci-uIf6H1or1nE-unsplash.jpg" alt="The Moon">
             </div>
-            
+            <!-- Player's owned upgrades, final column of row one -->
+            <div id="inventory-container" class="col-md-4">
+            </div>
+          </div>
             <!-- Store container here somewhere -->
             <div class="row d-flex">
               <div class="col-md-6 p-3 text-center">
                 <h3 class="">Purchase On-click Upgrades Below</h3>
                 <div class="d-flex justify-content-evenly">
-                  <div onclick="buyCheeseKnife('cheeseKnife')" class="flex-column d-flex border pointer pop">
+                  <div id="cheeseKnife" style="visibility: hidden;" onclick="buyCheeseKnife('cheeseKnife')" class="flex-column d-flex border pointer pop">
                     <div id="cheeseKnife-container">
                     </div>
                     <img class="upgradePics" src="/assets/nathalia-rosa-BtD81mBbD0E-unsplash.jpg" alt="">
                   </div>
-                  <div onclick="buyCheeseStorage()" class="d-flex flex-column border pointer pop">
+                  <div id="cheeseStorage" style="visibility: hidden;" onclick="buyCheeseStorage()" class="d-flex flex-column border pointer pop">
                     <div id="cheeseStorage-container">
                     </div>
                     <img class="upgradePics" src="/assets/katrin-leinfellner-v9deD75EaRw-unsplash.jpg" alt="">
@@ -58,13 +53,12 @@
                 <div class="col-md-6 p-3 text-center">
                   <h3>Purchase Automated Upgrades Below</h3>
                   <div class="d-flex justify-content-evenly">
-                      <div onclick="buySpaceCow()" class="d-flex flex-column pointer border pop">
+                      <div id="spaceCow" style="visibility: hidden;" onclick="buySpaceCow()" class="d-flex flex-column pointer border pop">
                       <div id="spaceCow-container">
                       </div>
                       <img class="upgradePics" src="/assets/spaceCow.jpg" alt="A cow in a space suit">
                       </div>
-
-                    <div onclick="buyDairyRefinery()" class="d-flex flex-column pointer border pop">
+                    <div id="lunarDairyRefinery" style="visibility: hidden;" onclick="buyDairyRefinery()" class="d-flex flex-column pointer border pop">
                       <div id="dairyRefinery-container"></div>
                       <img class="upgradePics" src="/assets/tasos-mansour-NRfNe4ys_bM-unsplash.jpg" alt="">
                     </div>
@@ -72,11 +66,10 @@
               </div>
             </div>
         </div>
-
       </main>
-      <footer>
+      <footer class="fs-5 bg-dark px-3">
+        z.g.
       </footer>
-
     <script src="main.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
